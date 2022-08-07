@@ -12,7 +12,7 @@
 var widgetText = '<span style="position:fixed;top: 50px; right: 1px;text-align:right;"><iframe id="linkForMaps" src="https://yandex.ru/map-widget/v1/" width=600 height=500 frameborder="2" allowfullscreen="true"></iframe><br><a style="background-color: white;color: black;border: 2px solid green;padding: 5px 5px;" id="wrongAddress" target="_blank" rel="noopener noreferrer" href="https://yandex.ru/maps">Yandex.Maps</a></span>'
 var lnk = "https://yandex.ru/map-widget/v1/?"
 var timerId;
-var MEMO="vlgom";
+var MEMO;
 main();
 
 
