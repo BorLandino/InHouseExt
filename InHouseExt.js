@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         InHouseChecker
 // @namespace    ikeainhousedelivery.azurewebsites.net
-// @version      0.6
+// @version      0.6.1
 // @description  try to take over the world!
 // @author       vlgom
 // @match        https://ikeainhousedelivery.azurewebsites.net/Shipment/PreparedShipment
