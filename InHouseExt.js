@@ -7,6 +7,8 @@
 // @match        https://ikeainhousedelivery.azurewebsites.net/Shipment/PreparedShipment
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant        none
+// @downloadURL https://raw.githubusercontent.com/BorLandino/InHouseExt/main/InHouseExt.js
+// @updateURL https://raw.githubusercontent.com/BorLandino/InHouseExt/main/InHouseExt.js
 // ==/UserScript==
 
 var widgetText = '<span style="position:fixed;top: 50px; right: 1px;text-align:right;"><iframe id="linkForMaps" src="https://yandex.ru/map-widget/v1/" width=600 height=500 frameborder="2" allowfullscreen="true"></iframe><br><a style="background-color: white;color: black;border: 2px solid green;padding: 5px 5px;" id="wrongAddress" target="_blank" rel="noopener noreferrer" href="https://yandex.ru/maps">Yandex.Maps</a></span>'
