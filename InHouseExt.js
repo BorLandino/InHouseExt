@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         InHouseChecker
 // @namespace    ikeainhousedelivery.azurewebsites.net
-// @version      0.6.3
+// @version      0.6.3.2
 // @description  try to take over the world!
 // @author       vlgom
 // @match        https://ikeainhousedelivery.azurewebsites.net/Shipment/PreparedShipment
@@ -35,8 +35,7 @@ function insertComment(dataShipmentId,comment,replace){
         $("[data-shipment-id='"+dataShipmentId+"'][class='shipment-comment-open-dialog btn btn-link btn-sm']")[0].click();
         //console.log(b);
         document.getElementById("shipment-comment-area").value = comment;
-        //document.getElementById("shipment-comment-save").click();
-        //document.getElementById("shipment-comment-save").click();
+        setTimeout(function(){document.getElementById("shipment-comment-save").click()}, 500);
     }
 }
 
@@ -103,3 +102,7 @@ window.onscroll = function() {
       document.getElementById("extSpan").style.display = 'none';
   }
 }
+
+var bAlert = window.alert;
+window.alert = function (text) {/*bAlert(text)*/; console.log(text); return true; };
+//alert( new Date());
