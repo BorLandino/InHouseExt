@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         InHouseChecker
 // @namespace    ikeainhousedelivery.azurewebsites.net
-// @version      0.6.2
+// @version      0.6.3
 // @description  try to take over the world!
 // @author       vlgom
 // @match        https://ikeainhousedelivery.azurewebsites.net/Shipment/PreparedShipment
@@ -11,7 +11,7 @@
 // @updateURL https://raw.githubusercontent.com/BorLandino/InHouseExt/main/InHouseExt.js
 // ==/UserScript==
 
-var widgetText = '<span style="position:fixed;top: 50px; right: 1px;text-align:right;"><iframe id="linkForMaps" src="https://yandex.ru/map-widget/v1/" width=600 height=500 frameborder="2" allowfullscreen="true"></iframe><br><a style="background-color: white;color: black;border: 2px solid green;padding: 5px 5px;" id="wrongAddress" target="_blank" rel="noopener noreferrer" href="https://yandex.ru/maps">Yandex.Maps</a></span>'
+var widgetText = '<span id="extSpan" style="display:none; position:fixed;top: 1px; right: 1px;text-align:right;"><iframe id="linkForMaps" src="https://yandex.ru/map-widget/v1/" width=600 height=500 frameborder="2" allowfullscreen="true"/><br><input style="width: 600px; background-color: white;color: black;border: 2px solid green;padding: 5px 5px;" id="wrongAddress"/></span>'
 var lnk = "https://yandex.ru/map-widget/v1/?"
 var timerId;
 var MEMO;
@@ -34,7 +34,7 @@ function insertComment(dataShipmentId,comment,replace){
         $("[data-shipment-id='"+dataShipmentId+"'][class='shipment-comment-open-dialog btn btn-link btn-sm']")[0].click();
         //console.log(b);
         document.getElementById("shipment-comment-area").value = comment;
-        document.getElementById("shipment-comment-save").click();
+        //document.getElementById("shipment-comment-save").click();
         //document.getElementById("shipment-comment-save").click();
     }
 }
@@ -42,7 +42,7 @@ function insertComment(dataShipmentId,comment,replace){
 function main() {
     'use strict';
     MEMO = prompt('Введите ваш MEMO для запуска скрипта',MEMO);
-    if (MEMO != null) {
+    if (MEMO != null && MEMO != "") {
         //обновляем ссылки при первом запуске
         timeoutUpdateLinks();
         //добавляем виджет карты
@@ -51,6 +51,8 @@ function main() {
         document.getElementById("filter-btn").addEventListener('click', timeoutUpdateLinks);
         //добавление события к изменению адреса
         document.getElementById("save-address-btn").addEventListener('click', ReplaceAddress);
+        //добавление события в поле ввода адреса
+        document.getElementById("wrongAddress").addEventListener('keypress',changeAddress);
     }
 };
 
@@ -73,12 +75,35 @@ function updateLinks(){
         var miniMap = document.getElementById("linkForMaps");
         miniMap.src = lnk + e.target.href.split("?")[1];
         var dataShipmentId = e.target.getAttribute("id").split("shipment-checkcoord-")[1];
-        console.log(document.getElementById("shipment-address-" + dataShipmentId).textContent);
-        document.getElementById("wrongAddress").innerHTML=document.getElementById("shipment-address-" + dataShipmentId).textContent;
-        document.getElementById("wrongAddress").href="https://yandex.ru/maps/?text=" + document.getElementById("shipment-address-" + dataShipmentId).textContent;
+        //console.log(document.getElementById("shipment-address-" + dataShipmentId).textContent);
+        document.getElementById("wrongAddress").value=document.getElementById("shipment-address-" + dataShipmentId).textContent;
+        //document.getElementById("wrongAddress").href="https://yandex.ru/maps/?text=" + document.getElementById("shipment-address-" + dataShipmentId).textContent;
         return false;
     } );
     var chk = document.getElementsByClassName("small shipment-state-text-unverified");
     Array.from(chk).forEach(element => element.addEventListener('click', function(){insertComment(element.getAttribute("data-shipment-id"),MEMO,false)}));
 }
 
+function changeAddress(e) {
+    //See notes about 'which' and 'key'
+    if (e.keyCode == 13) {
+        var miniMap = document.getElementById("linkForMaps");
+        miniMap.src = lnk +"text="+ document.getElementById("wrongAddress").value;
+        return false;
+    }
+}
+
+var oldScrollY = 0;
+var div = document.getElementById("fixedDiv");
+
+window.onscroll = function() {
+  var scrolled = window.pageYOffset || document.documentElement.scrollTop;
+  var dY = scrolled - oldScrollY;
+  //console.log(window.pageYOffset);
+  if (window.pageYOffset>150){
+      document.getElementById("extSpan").style.display = 'block';
+  }else{
+      document.getElementById("extSpan").style.display = 'none';
+  }
+  oldScrollY = scrolled;
+}
