@@ -12,6 +12,7 @@
 // ==/UserScript==
 
 var widgetText = '<span id="extSpan" style="display:none; position:fixed;top: 1px; right: 1px;text-align:right;"><iframe id="linkForMaps" src="https://yandex.ru/map-widget/v1/" width=600 height=500 frameborder="2" allowfullscreen="true"/><br><input style="width: 600px; background-color: white;color: black;border: 2px solid green;padding: 5px 5px;" id="wrongAddress"/></span>'
+var checkButton = '<button type="button" id="checkButton" class="btn btn-primary">Check</button>'
 var lnk = "https://yandex.ru/map-widget/v1/?"
 var timerId;
 var MEMO;
@@ -24,7 +25,7 @@ function test(){
 function ReplaceAddress(){
     var dataShipmentId = document.getElementById("address-shipment").value;
     var addressText = document.getElementById("address-text").value;
-    insertComment(dataShipmentId,addressText + " " + MEMO,true);
+    insertComment(dataShipmentId,addressText + " " + MEMO,false);
 }
 
 function insertComment(dataShipmentId,comment,replace){
@@ -47,6 +48,7 @@ function main() {
         timeoutUpdateLinks();
         //добавляем виджет карты
         $('body').append(widgetText);
+        $('body').append(checkButton);
         //добавление события на обновление списка
         document.getElementById("filter-btn").addEventListener('click', timeoutUpdateLinks);
         //добавление события к изменению адреса
