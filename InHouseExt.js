@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         InHouseChecker
 // @namespace    ikeainhousedelivery.azurewebsites.net
-// @version      0.7
+// @version      0.7.1
 // @description  try to take over the world!
 // @author       vlgom
 // @match        https://ikeainhousedelivery.azurewebsites.net/Shipment/PreparedShipment
@@ -41,7 +41,7 @@ function insertComment(dataShipmentId,comment,replace){
 
 function main() {
     'use strict';
-    MEMO = prompt('Введите ваш MEMO для запуска скрипта(0.7)',MEMO);
+    MEMO = prompt('Введите ваш MEMO для запуска скрипта(0.7.1)',MEMO);
     if (MEMO != null && MEMO != "") {
         //обновляем ссылки при первом запуске
         timeoutUpdateLinks();
@@ -81,11 +81,11 @@ function timeoutUpdateLinks(){
 
 function SaveByMiniMaps(){
     var dataShipmentId = document.getElementById("datashipVal").value;
-    $("[data-shipment-id='"+dataShipmentId+"'][class='btn tn-sm btn-primary address-dialog-btn']")[0].click();
+    $("button:contains('Изменить адрес')[data-shipment-id='"+dataShipmentId+"']")[0].click();
     document.getElementById("address-text").value = document.getElementById("wrongAddress").value;
     setTimeout(function(){document.getElementById("save-address-btn").click()},750);
+    document.getElementById("savedNewAddressButton").style.display="none";
     console.log(t);
-    "address-text"
     //"32e91383-c97e-4bfd-9460-08da6749bd52"
     //document.getElementById("wrongAddress").value
 }
