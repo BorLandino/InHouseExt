@@ -95,17 +95,11 @@ function changeAddress(e) {
     }
 }
 
-var oldScrollY = 0;
-var div = document.getElementById("fixedDiv");
-
 window.onscroll = function() {
-  var scrolled = window.pageYOffset || document.documentElement.scrollTop;
-  var dY = scrolled - oldScrollY;
   //console.log(window.pageYOffset);
   if (window.pageYOffset>150){
       document.getElementById("extSpan").style.display = 'block';
   }else{
       document.getElementById("extSpan").style.display = 'none';
   }
-  oldScrollY = scrolled;
 }
