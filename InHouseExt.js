@@ -25,7 +25,7 @@ function test(){
 function ReplaceAddress(){
     var dataShipmentId = document.getElementById("address-shipment").value;
     var addressText = document.getElementById("address-text").value;
-    insertComment(dataShipmentId,addressText + " " + MEMO,false);
+    insertComment(dataShipmentId,addressText + " " + MEMO,true);
 }
 
 function insertComment(dataShipmentId,comment,replace){
