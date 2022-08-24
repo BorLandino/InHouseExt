@@ -42,7 +42,7 @@ function insertComment(dataShipmentId,comment,replace){
 
 function main() {
     'use strict';
-    MEMO = prompt('Введите ваш MEMO для запуска скрипта(0.7.1)',MEMO);
+    MEMO = prompt('Введите ваш MEMO для запуска скрипта(0.7.5)',MEMO);
     if (MEMO != null && MEMO != "") {
         //обновляем ссылки при первом запуске
         timeoutUpdateLinks();
