@@ -149,7 +149,8 @@ function updateLinks(){
         //console.log(document.getElementById("shipment-address-" + dataShipmentId).textContent);
         document.getElementById("wrongAddress").value=document.getElementById("shipment-address-" + dataShipmentId).textContent;
         //document.getElementById("wrongAddress").href="https://yandex.ru/maps/?text=" + document.getElementById("shipment-address-" + dataShipmentId).textContent;
-        console.log("shipment-row-"+dataShipmentId);
+        document.getElementById("extSpan").style.display = 'block';
+        //console.log("shipment-row-"+dataShipmentId);
         return false;
     } );
     var chk = document.getElementsByClassName("small shipment-state-text-unverified");
