@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         InHouseChecker
 // @namespace    ikeainhousedelivery.azurewebsites.net
-// @version      0.7.2
+// @version      0.7.3
 // @description  try to take over the world!
 // @author       vlgom
 // @match        https://ikeainhousedelivery.azurewebsites.net/Shipment/PreparedShipment
@@ -57,6 +57,13 @@ function main() {
         document.getElementById("savedNewAddressButton").addEventListener('click',SaveByMiniMaps);
         document.getElementById("checkButton").addEventListener('click',unCheckAdr);
         document.getElementById("miniMapCloseBtn").addEventListener('click',miniMapCloseBtnClick);
+        const style = document.createElement('style');
+        style.innerHTML = `
+     tr[userColor] {
+        background-color: yellow;
+      }
+    `;
+document.head.appendChild(style);
     }
 };
 
@@ -106,6 +113,22 @@ function SaveByMiniMaps(){
     //document.getElementById("wrongAddress").value
 }
 
+function paintRows(){
+    var elements = document.getElementsByClassName("shipment-row");
+    Array.from(elements).forEach(function(element){
+        var dataId = element.getAttribute("data-id");
+        var comm = document.getElementById("shipment-comment-text-" + dataId).textContent;
+        if (comm.length>10){
+            var addr = document.getElementById("shipment-address-" + dataId).textContent;
+            if (comm.indexOf(addr)<0){
+                console.log(dataId);
+                console.log(comm.indexOf(addr));
+                element.setAttribute("userColor",true);
+            }
+        }
+    });
+}
+
 function updateLinks(){
   // Save it!
     var btn = document.getElementById("filter-btn");
@@ -124,10 +147,12 @@ function updateLinks(){
         //console.log(document.getElementById("shipment-address-" + dataShipmentId).textContent);
         document.getElementById("wrongAddress").value=document.getElementById("shipment-address-" + dataShipmentId).textContent;
         //document.getElementById("wrongAddress").href="https://yandex.ru/maps/?text=" + document.getElementById("shipment-address-" + dataShipmentId).textContent;
+        console.log("shipment-row-"+dataShipmentId);
         return false;
     } );
     var chk = document.getElementsByClassName("small shipment-state-text-unverified");
     Array.from(chk).forEach(element => element.addEventListener('click', function(){insertComment(element.getAttribute("data-shipment-id"),MEMO,false)}));
+    paintRows();
 }
 
 var inputTimerId;
