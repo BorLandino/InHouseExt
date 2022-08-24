@@ -149,6 +149,9 @@ function updateLinks(){
         //console.log(document.getElementById("shipment-address-" + dataShipmentId).textContent);
         document.getElementById("wrongAddress").value=document.getElementById("shipment-address-" + dataShipmentId).textContent;
         //document.getElementById("wrongAddress").href="https://yandex.ru/maps/?text=" + document.getElementById("shipment-address-" + dataShipmentId).textContent;
+        var btn = document.getElementById("miniMapCloseBtn");
+        btn.setAttribute("isOpen", 'true');
+        btn.textContent = "[x]";
         document.getElementById("extSpan").style.display = 'block';
         //console.log("shipment-row-"+dataShipmentId);
         return false;
