@@ -174,6 +174,6 @@ Function.prototype.clone = function() {
     return temp;
 };
 
-var bAlert = window.alert.clone({});
+var bAlert = window.alert.clone();
 window.alert = function (text) {/*bAlert(text)*/; console.log(text); return true; };
 //alert( new Date());
