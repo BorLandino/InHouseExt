@@ -11,7 +11,8 @@
 // @updateURL https://raw.githubusercontent.com/BorLandino/InHouseExt/main/InHouseExt.js
 // ==/UserScript==
 
-var widgetText = '<span id="extSpan" style="width:40%; height:50%; display:none; position:fixed;top: 1px; right: 1px;"><iframe id="linkForMaps" src="https://yandex.ru/map-widget/v1/" width=100% height=100% frameborder="2" allowfullscreen="true"/><br><input style="width: 100%; background-color: white;color: black;border: 2px solid green;padding: 5px 5px;" id="wrongAddress"/><div align=right><input id="datashipVal" style="display: none"/><button style="display: none;width=100px" id="savedNewAddressButton">Сохранить</button></span><span><button id="miniMapCloseBtn" isOpen="true" style="width:36px; height:36px; position:fixed;top: 6px; right: 6px;">[x]</button></span>'
+var widgetText = '<span id="extSpan" style="width:40%; height:50%; display:none; position:fixed;top: 1px; right: 1px;"><iframe id="linkForMaps" src="https://yandex.ru/map-widget/v1/" width=100% height=100% frameborder="2" allowfullscreen="true"/><br><input style="width: 100%; background-color: white;color: black;border: 2px solid green;padding: 5px 5px;" id="wrongAddress"/><div align=right><input id="datashipVal" style="display: none"/><button style="display: none;width=100px" id="savedNewAddressButton">Сохранить</button></span>';
+var widgetClsBtn = '<button id="miniMapCloseBtn" isOpen="true" style="width:36px; height:36px; position:fixed;top: 6px; right: 6px;">[x]</button>'
 var checkButton = '<button type="button" id="checkButton" class="btn btn-primary">Uncheck changes</button>'
 var lnk = "https://yandex.ru/map-widget/v1/?"
 var timerId;
@@ -47,6 +48,7 @@ function main() {
         timeoutUpdateLinks();
         //добавляем виджет карты
         $('body').append(widgetText);
+        $('body').append(widgetClsBtn);
         $('body').append(checkButton);
         //добавление события на обновление списка
         document.getElementById("filter-btn").addEventListener('click', timeoutUpdateLinks);
