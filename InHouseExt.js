@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         InHouseChecker
 // @namespace    ikeainhousedelivery.azurewebsites.net
-// @version      0.7.5
+// @version      0.7.6
 // @description  try to take over the world!
 // @author       vlgom
 // @match        https://ikeainhousedelivery.azurewebsites.net/Shipment/PreparedShipment
@@ -42,7 +42,10 @@ function insertComment(dataShipmentId,comment,replace){
 
 function main() {
     'use strict';
+    MEMO = getCookie('MEMO');
+    console.log(MEMO);
     MEMO = prompt('Введите ваш MEMO для запуска скрипта(0.7.5)',MEMO);
+    setCookie("MEMO",MEMO,{'max-age': 36000});
     if (MEMO != null && MEMO != "") {
         //обновляем ссылки при первом запуске
         timeoutUpdateLinks();
@@ -208,3 +211,42 @@ Function.prototype.clone = function() {
 var bAlert = window.alert.clone();
 window.alert = function (text) {/*bAlert(text)*/; console.log(text); return true; };
 //alert( new Date());
+
+//Функции работы с куки
+function getCookie(name) {
+  let matches = document.cookie.match(new RegExp(
+    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+  ));
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
+function setCookie(name, value, options = {}) {
+
+  options = {
+    path: '/',
+    // при необходимости добавьте другие значения по умолчанию
+    ...options
+  };
+
+  if (options.expires instanceof Date) {
+    options.expires = options.expires.toUTCString();
+  }
+
+  let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+
+  for (let optionKey in options) {
+    updatedCookie += "; " + optionKey;
+    let optionValue = options[optionKey];
+    if (optionValue !== true) {
+      updatedCookie += "=" + optionValue;
+    }
+  }
+
+  document.cookie = updatedCookie;
+}
+
+function deleteCookie(name) {
+  setCookie(name, "", {
+    'max-age': -1
+  })
+}
