@@ -44,8 +44,10 @@ function insertComment(dataShipmentId, comment, replace){
 
 function newMemo(){
     MEMO = prompt('Введите ваш MEMO для запуска скрипта('+ GM_info.script.version +')',MEMO);
-    if (MEMO=="") {
+    if (MEMO==undefined || MEMO == "" || MEMO == null) {
         deleteCookie("MEMO");
+        MEMO=""
+        document.getElementById("MEMOKeeper").textContent='MEMO';
     }else{
         setCookie("MEMO",MEMO);
         document.getElementById("MEMOKeeper").textContent=MEMO;
