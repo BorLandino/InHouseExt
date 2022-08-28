@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         InHouseChecker
 // @namespace    ikeainhousedelivery.azurewebsites.net
-// @version      0.7.6
+// @version      0.7.8
 // @description  try to take over the world!
 // @author       vlgom
 // @match        https://ikeainhousedelivery.azurewebsites.net/Shipment/PreparedShipment
@@ -12,8 +12,10 @@
 // ==/UserScript==
 
 var widgetText = '<span id="extSpan" style="width:40%; height:50%; display:none; position:fixed;top: 1px; right: 1px;"><iframe id="linkForMaps" src="https://yandex.ru/map-widget/v1/" width=100% height=100% frameborder="2" allowfullscreen="true"/><br><input style="width: 100%; background-color: white;color: black;border: 2px solid green;padding: 5px 5px;" id="wrongAddress"/><div align=right><input id="datashipVal" style="display: none"/><button style="display: none;width=100px" id="savedNewAddressButton">Сохранить</button></span>';
-var widgetClsBtn = '<button id="miniMapCloseBtn" isOpen="true" style="width:36px; height:36px; position:fixed;top: 6px; right: 6px;">[x]</button>'
-var checkButton = '<button type="button" id="checkButton" class="btn btn-primary">Uncheck changes</button>'
+var widgetClsBtn = '<button id="miniMapCloseBtn" isOpen="true" style="width:36px; height:36px; position:fixed;top: 6px; right: 6px;">[x]</button>';
+var checkButton = '<button type="button" id="checkButton" class="btn btn-primary">Uncheck changes</button>';
+var MEMOkeeper = '<li class="nav-item"><a id="MEMOKeeper" class="nav-link text-dark" href="#" >MEMO</a></li>';
+
 var lnk = "https://yandex.ru/map-widget/v1/?"
 var timerId;
 var MEMO;
@@ -29,7 +31,7 @@ function ReplaceAddress(){
     insertComment(dataShipmentId,addressText + " " + MEMO,true);
 }
 
-function insertComment(dataShipmentId,comment,replace){
+function insertComment(dataShipmentId, comment, replace){
     //var orderId = dataset.orderId;
     var c = document.getElementById("shipment-comment-text-"+dataShipmentId).textContent
     if (c=="" || replace) {
@@ -40,13 +42,21 @@ function insertComment(dataShipmentId,comment,replace){
     }
 }
 
+function newMemo(){
+    MEMO = prompt('Введите ваш MEMO для запуска скрипта('+ GM_info.script.version +')',MEMO);
+    if (MEMO=="") {
+        deleteCookie("MEMO");
+    }else{
+        setCookie("MEMO",MEMO);
+        document.getElementById("MEMOKeeper").textContent=MEMO;
+    }
+}
+
 function main() {
     'use strict';
     MEMO = getCookie('MEMO');
-    //console.log(MEMO);
-    if (MEMO==undefined){
-        MEMO = prompt('Введите ваш MEMO для запуска скрипта(0.7.6)',MEMO);
-        setCookie("MEMO",MEMO,{'max-age': 3600});
+    if (MEMO==undefined || MEMO == "" || MEMO == null){
+        newMemo();
     }
     if (MEMO != null && MEMO != "") {
         //обновляем ссылки при первом запуске
@@ -71,6 +81,10 @@ function main() {
       }
     `;
 document.head.appendChild(style);
+
+        $("[class='navbar-nav flex-grow-1']").append(MEMOkeeper);
+        document.getElementById("MEMOKeeper").textContent=MEMO;
+        document.getElementById("MEMOKeeper").addEventListener('click',newMemo);
     }
 };
 
