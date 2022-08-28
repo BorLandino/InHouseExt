@@ -44,7 +44,7 @@ function main() {
     'use strict';
     MEMO = getCookie('MEMO');
     console.log(MEMO);
-    MEMO = prompt('Введите ваш MEMO для запуска скрипта(0.7.5)',MEMO);
+    MEMO = prompt('Введите ваш MEMO для запуска скрипта(0.7.6)',MEMO);
     setCookie("MEMO",MEMO,{'max-age': 36000});
     if (MEMO != null && MEMO != "") {
         //обновляем ссылки при первом запуске
